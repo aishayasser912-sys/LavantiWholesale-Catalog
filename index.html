@@ -36,12 +36,14 @@
     display: none;
     width: 100%;
     height: 100%;
-    padding: 60px 50px;
+    padding: 60px 50px 130px;
     position: relative;
   }
 
   .page.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   /* ---------- Cover page ---------- */
@@ -204,7 +206,7 @@
   /* ---------- Navigation ---------- */
   .nav-bar {
     position: absolute;
-    bottom: 40px;
+    bottom: 20px;
     left: 50px;
     right: 50px;
     display: flex;
@@ -214,7 +216,7 @@
 
   .nav-btn {
     background: #222;
-    color: #fff;
+[8/11/2026 10:26 PM] Aisha Yasser: color: #fff;
     border: none;
     padding: 12px 24px;
     border-radius: 6px;
@@ -294,8 +296,8 @@
       colors: [
         { name: "Grey", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x560/6E6A66/ffffff?text=Charcoal" },
         { name: "Oak",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
-        { name: "Oak E",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x560/C9A57C/ffffff?text=Tan" }
-        { name: "White",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
+        { name: "Oak E",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x560/C9A57C/ffffff?text=Tan" },
+        { name: "White",    hex: "#F4F2ED", sku: "V04-WHT-1830-1", image: "https://placehold.co/900x560/F4F2ED/333333?text=White" }
       ]
     },
     {
@@ -337,7 +339,7 @@
 
     page.innerHTML = `
       <div class="collection-label">${product.collection}</div>
-      <div class="product-name">${product.name}</div>
+[8/11/2026 10:26 PM] Aisha Yasser: <div class="product-name">${product.name}</div>
       <div class="colors-heading">Available colors</div>
       <div class="swatch-row"></div>
       <div class="sku-code"></div>
