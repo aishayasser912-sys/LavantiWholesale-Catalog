@@ -81,7 +81,7 @@
     margin-bottom: 50px;
   }
 
-  .cover-image {Gemini_Generated_Image_mcxy52mcxy52mcxy.jpg
+  .cover-image {
     width: 700px;
     height: 700px;
     object-fit: cover;
@@ -98,7 +98,14 @@
     color: #888;
     margin-bottom: 6px;
   }
-
+ 
+  #canvas {
+    width: 1080px;
+    height: 1920px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    } 
   .product-name {
     text-align: center;
     font-size: 40px;
@@ -272,9 +279,9 @@
      ============================================================ */
   const COVER = {
     logo: "Lavanti",
-    title: "2026 Catalog",
-    subtitle: "Bathroom Vanities & Collections",
-    image: "https://placehold.co/700x700/e8e4dc/999?text=Cover+Image"
+    title: "Lavanti",
+    subtitle: "Wholesale Catalog",
+    image: "Gemini_Generated_Image_mcxy52mcxy52mcxy.jpg"
   };
 
   /* ============================================================
@@ -283,7 +290,7 @@
   const PRODUCTS = [
     {
       name: "Bathroom Vanity",
-      collection: "Lavanti Depos",
+      collection: "Oakford",
       price: "$250",
       dimensions: "W 30\" \u00b7 D 22\" \u00b7 H 35\"",
       thumbnails: [
@@ -292,13 +299,14 @@
         "https://placehold.co/200x200/e8e4dc/999?text=Base"
       ],
       colors: [
-        { name: "Charcoal", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x560/6E6A66/ffffff?text=Charcoal" },
-        { name: "Cream",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
-        { name: "Tan",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x560/C9A57C/ffffff?text=Tan" }
+        { name: "Grey", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x560/6E6A66/ffffff?text=Charcoal" },
+        { name: "Oak",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
+        { name: "Oak E",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x560/C9A57C/ffffff?text=Tan" }
+        { name: "White",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
       ]
     },
     {
-      name: "Floating Vanity",
+      name: "Bathroom Vanity",
       collection: "Lavanti Mira",
       price: "$310",
       dimensions: "W 36\" \u00b7 D 20\" \u00b7 H 22\"",
