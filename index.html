@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Interactive Color Catalog</title>
+<title>Interactive Product Catalog</title>
 <style>
   /* ============================================================
-     HOW TO EDIT THIS FILE (read this first!)
+     HOW TO EDIT THIS FILE
      ============================================================
-     1. Find the "PRODUCTS" list in the <script> section near the
-        bottom of this file.
-     2. For each product, replace the placeholder image URLs with
-        your own image file names (e.g. "shirt-red.jpg").
-     3. Upload your image files to the SAME GitHub folder as this
-        index.html file.
-     4. Change the "name" and "hex" (color) for each swatch to
-        match your real product colors.
-     5. Save, upload everything to GitHub, and it just works.
+     Scroll down to the PRODUCTS list in the <script> section.
+     For each product, fill in:
+       - name, collection, price, dimensions
+       - hero: the main big image per color
+       - thumbnails: the small detail shots (same for all colors,
+         unless you want them to change too -- ask if so)
+       - colors: each needs a name, hex, sku code, and hero image
+     Upload your image files to the same GitHub folder as this
+     file, then just use the filename, e.g. "vanity-gray.jpg"
      ============================================================ */
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,63 +27,50 @@
     justify-content: center;
   }
 
-  /* This is your fixed 1080 x 1920 canvas */
   #canvas {
     width: 1080px;
     height: 1920px;
     background: #ffffff;
+    padding: 60px 50px;
     position: relative;
     overflow: hidden;
   }
 
-  .page-title {
+  .collection-label {
     text-align: center;
-    font-size: 48px;
-    font-weight: bold;
-    padding: 60px 0 20px;
-    color: #222;
-  }
-
-  .product-card {
-    width: 900px;
-    margin: 30px auto;
-    border: 1px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-  }
-
-  .product-image {
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
-    border-radius: 12px;
-    background: #eee;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
   }
 
   .product-name {
-    font-size: 32px;
+    text-align: center;
+    font-size: 40px;
     font-weight: bold;
-    margin-top: 20px;
     color: #222;
+    margin-bottom: 30px;
   }
 
-  .product-color-label {
-    font-size: 20px;
-    color: #666;
-    margin-top: 6px;
+  .colors-heading {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 16px;
   }
 
   .swatch-row {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 14px;
+    margin-bottom: 8px;
   }
 
   .swatch {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     cursor: pointer;
     border: 3px solid transparent;
@@ -93,90 +80,165 @@
   .swatch.selected {
     border-color: #222;
   }
+
+  .sku-code {
+    text-align: center;
+    font-size: 16px;
+    color: #a05a2c;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+    margin-bottom: 20px;
+  }
+
+  .thumb-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+    border: 1px solid #eee;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  .price-tag {
+    background: #f7f4ee;
+    border-radius: 6px;
+    padding: 20px 24px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #b0301f;
+  }
+
+  .details {
+    text-align: right;
+  }
+
+  .details h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .details p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+  }
 </style>
 </head>
 <body>
 
 <div id="canvas">
-  <div class="page-title">Our Catalog</div>
-  <div id="product-list"></div>
+  <div class="collection-label" id="collection-label"></div>
+  <div class="product-name" id="product-name"></div>
+
+  <div class="colors-heading">Available colors</div>
+  <div class="swatch-row" id="swatch-row"></div>
+  <div class="sku-code" id="sku-code"></div>
+
+  <img class="hero-image" id="hero-image" src="" alt="">
+
+  <div class="thumb-row" id="thumb-row"></div>
+
+  <div class="info-row">
+    <div class="price-tag" id="price-tag"></div>
+    <div class="details">
+      <h3>Dimensions</h3>
+      <p id="dimensions"></p>
+      <h3 style="margin-top:16px;">Collection</h3>
+      <p id="collection-name"></p>
+    </div>
+  </div>
 </div>
 
 <script>
   /* ============================================================
-     PRODUCTS
-     ============================================================
-     Add one entry per product. Inside "colors", add one entry
-     per color variant: give it a name, a hex color for the swatch
-     circle, and the image file to show when that swatch is clicked.
-
-     Replace the placeholder "https://placehold.co/..." URLs with
-     your own image file names once you upload them to GitHub,
-     e.g. "shirt-red.jpg"
+     PRODUCTS -- edit everything below
      ============================================================ */
 
   const PRODUCTS = [
     {
-      name: "Available colors",
+      name: "Bathroom Vanity",
+      collection: "Lavanti Depos",
+      price: "$250",
+      dimensions: "W 30\" \u00b7 D 22\" \u00b7 H 35\"",
+      thumbnails: [
+        "https://placehold.co/200x200/e8e4dc/999?text=Drawer",
+        "https://placehold.co/200x200/e8e4dc/999?text=Sink",
+        "https://placehold.co/200x200/e8e4dc/999?text=Base"
+      ],
       colors: [
-        { name: "V04-GY-36x18C",   hex: "#808080", image: "https://placehold.co/500x500/D85A30/ffffff?text=Red" },
-        { name: "Blue",  hex: "#378ADD", image: "https://placehold.co/500x500/378ADD/ffffff?text=Blue" },
-        { name: "Green", hex: "#639922", image: "https://placehold.co/500x500/639922/ffffff?text=Green" }
-      ]
-    },
-    {
-      name: "Everyday Tote Bag",
-      colors: [
-        { name: "Black", hex: "#2C2C2A", image: "https://placehold.co/500x500/2C2C2A/ffffff?text=Black" },
-        { name: "Beige", hex: "#D3D1C7", image: "https://placehold.co/500x500/D3D1C7/222222?text=Beige" }
+        { name: "Charcoal", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x620/6E6A66/ffffff?text=Charcoal" },
+        { name: "Cream",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x620/D8D2C2/333333?text=Cream" },
+        { name: "Tan",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x620/C9A57C/ffffff?text=Tan" },
+        { name: "Rosewood", hex: "#A9847B", sku: "V04-RSW-1830-1", image: "https://placehold.co/900x620/A9847B/ffffff?text=Rosewood" },
+        { name: "Pale Gray", hex: "#CBCDD4", sku: "V05-PGY-1830-1", image: "https://placehold.co/900x620/CBCDD4/333333?text=Pale+Gray" },
+        { name: "Slate",    hex: "#8E97A6", sku: "V06-SLT-1830-1", image: "https://placehold.co/900x620/8E97A6/ffffff?text=Slate" },
+        { name: "Graphite", hex: "#5B5B5B", sku: "V07-GRP-1830-1", image: "https://placehold.co/900x620/5B5B5B/ffffff?text=Graphite" }
       ]
     }
   ];
 
-  const listContainer = document.getElementById("product-list");
+  const product = PRODUCTS[0];
 
-  PRODUCTS.forEach((product, productIndex) => {
-    const card = document.createElement("div");
-    card.className = "product-card";
+  document.getElementById("collection-label").textContent = product.collection;
+  document.getElementById("product-name").textContent = product.name;
+  document.getElementById("price-tag").textContent = product.price;
+  document.getElementById("dimensions").textContent = product.dimensions;
+  document.getElementById("collection-name").textContent = product.collection;
 
-    const img = document.createElement("img");
-    img.className = "product-image";
-    img.src = product.colors[0].image;
-    img.alt = product.name;
+  const heroImage = document.getElementById("hero-image");
+  const skuLabel = document.getElementById("sku-code");
+  const swatchRow = document.getElementById("swatch-row");
+  const thumbRow = document.getElementById("thumb-row");
 
-    const name = document.createElement("div");
-    name.className = "product-name";
-    name.textContent = product.name;
-
-    const colorLabel = document.createElement("div");
-    colorLabel.className = "product-color-label";
-    colorLabel.textContent = product.colors[0].name;
-
-    const swatchRow = document.createElement("div");
-    swatchRow.className = "swatch-row";
-
-    product.colors.forEach((color, colorIndex) => {
-      const btn = document.createElement("button");
-      btn.className = "swatch" + (colorIndex === 0 ? " selected" : "");
-      btn.style.background = color.hex;
-      btn.setAttribute("aria-label", color.name);
-
-      btn.onclick = () => {
-        img.src = color.image;
-        colorLabel.textContent = color.name;
-        swatchRow.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
-        btn.classList.add("selected");
-      };
-
-      swatchRow.appendChild(btn);
-    });
-
-    card.appendChild(img);
-    card.appendChild(name);
-    card.appendChild(colorLabel);
-    card.appendChild(swatchRow);
-    listContainer.appendChild(card);
+  product.thumbnails.forEach(src => {
+    const t = document.createElement("img");
+    t.className = "thumb";
+    t.src = src;
+    thumbRow.appendChild(t);
   });
+
+  function selectColor(color, btn) {
+    heroImage.src = color.image;
+    heroImage.alt = product.name + " - " + color.name;
+    skuLabel.textContent = color.sku;
+    swatchRow.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
+    btn.classList.add("selected");
+  }
+
+  product.colors.forEach((color, index) => {
+    const btn = document.createElement("button");
+    btn.className = "swatch" + (index === 0 ? " selected" : "");
+    btn.style.background = color.hex;
+    btn.setAttribute("aria-label", color.name);
+    btn.onclick = () => selectColor(color, btn);
+    swatchRow.appendChild(btn);
+  });
+
+  selectColor(product.colors[0], swatchRow.children[0]);
 </script>
 
 </body>
