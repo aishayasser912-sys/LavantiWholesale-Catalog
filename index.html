@@ -7,22 +7,19 @@
   /* ============================================================
      HOW TO EDIT THIS FILE
      ============================================================
-     Scroll down to the PRODUCTS list in the <script> section.
-     For each product, fill in:
-       - name, collection, price, dimensions
-       - hero: the main big image per color
-       - thumbnails: the small detail shots (same for all colors,
-         unless you want them to change too -- ask if so)
-       - colors: each needs a name, hex, sku code, and hero image
-     Upload your image files to the same GitHub folder as this
-     file, then just use the filename, e.g. "vanity-gray.jpg"
+     1. Edit the COVER object to set your cover page title/logo/image.
+     2. Edit the PRODUCTS list -- one entry = one page in the catalog.
+     3. Use the Next / Prev buttons (bottom of each page) to flip
+        through pages when viewing the site.
+     4. Upload your image files to the same GitHub folder as this
+        file, then just use the filename, e.g. "vanity-gray.jpg"
      ============================================================ */
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f4f2;
+    background: #d8d8d4;
     display: flex;
     justify-content: center;
   }
@@ -31,11 +28,68 @@
     width: 1080px;
     height: 1920px;
     background: #ffffff;
-    padding: 60px 50px;
     position: relative;
     overflow: hidden;
   }
 
+  .page {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 60px 50px;
+    position: relative;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  /* ---------- Cover page ---------- */
+  .cover-page {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px;
+  }
+
+  .cover-page.active {
+    display: flex;
+  }
+
+  .cover-logo {
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 30px;
+  }
+
+  .cover-title {
+    font-size: 56px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
+  }
+
+  .cover-subtitle {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 50px;
+  }
+
+  .cover-image {
+    width: 700px;
+    height: 700px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+  }
+
+  /* ---------- Product page ---------- */
   .collection-label {
     text-align: center;
     font-size: 18px;
@@ -92,7 +146,7 @@
   .hero-image {
     display: block;
     width: 100%;
-    height: 620px;
+    height: 560px;
     object-fit: cover;
     border-radius: 8px;
     background: #eee;
@@ -146,38 +200,86 @@
     color: #555;
     line-height: 1.5;
   }
+
+  /* ---------- Navigation ---------- */
+  .nav-bar {
+    position: absolute;
+    bottom: 40px;
+    left: 50px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-btn {
+    background: #222;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .nav-btn:disabled {
+    background: #ccc;
+    cursor: default;
+  }
+
+  .page-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+
+  .dot.active {
+    background: #222;
+  }
 </style>
 </head>
 <body>
 
 <div id="canvas">
-  <div class="collection-label" id="collection-label"></div>
-  <div class="product-name" id="product-name"></div>
 
-  <div class="colors-heading">Available colors</div>
-  <div class="swatch-row" id="swatch-row"></div>
-  <div class="sku-code" id="sku-code"></div>
-
-  <img class="hero-image" id="hero-image" src="" alt="">
-
-  <div class="thumb-row" id="thumb-row"></div>
-
-  <div class="info-row">
-    <div class="price-tag" id="price-tag"></div>
-    <div class="details">
-      <h3>Dimensions</h3>
-      <p id="dimensions"></p>
-      <h3 style="margin-top:16px;">Collection</h3>
-      <p id="collection-name"></p>
+  <!-- Cover page -->
+  <div class="cover-page active" data-page="0">
+    <div class="cover-logo" id="cover-logo"></div>
+    <div class="cover-title" id="cover-title"></div>
+    <div class="cover-subtitle" id="cover-subtitle"></div>
+    <img class="cover-image" id="cover-image" src="" alt="">
+    <div class="nav-bar">
+      <div></div>
+      <div class="page-dots" id="page-dots"></div>
+      <button class="nav-btn" onclick="goToPage(1)">Next</button>
     </div>
   </div>
+
+  <!-- Product pages get inserted here by JS -->
+  <div id="product-pages"></div>
+
 </div>
 
 <script>
   /* ============================================================
-     PRODUCTS -- edit everything below
+     COVER PAGE -- edit this
      ============================================================ */
+  const COVER = {
+    logo: "Lavanti",
+    title: "2026 Catalog",
+    subtitle: "Bathroom Vanities & Collections",
+    image: "https://placehold.co/700x700/e8e4dc/999?text=Cover+Image"
+  };
 
+  /* ============================================================
+     PRODUCTS -- one entry = one page. Add as many as you want.
+     ============================================================ */
   const PRODUCTS = [
     {
       name: "Bathroom Vanity",
@@ -190,55 +292,132 @@
         "https://placehold.co/200x200/e8e4dc/999?text=Base"
       ],
       colors: [
-        { name: "Charcoal", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x620/6E6A66/ffffff?text=Charcoal" },
-        { name: "Cream",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x620/D8D2C2/333333?text=Cream" },
-        { name: "Tan",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x620/C9A57C/ffffff?text=Tan" },
-        { name: "Rosewood", hex: "#A9847B", sku: "V04-RSW-1830-1", image: "https://placehold.co/900x620/A9847B/ffffff?text=Rosewood" },
-        { name: "Pale Gray", hex: "#CBCDD4", sku: "V05-PGY-1830-1", image: "https://placehold.co/900x620/CBCDD4/333333?text=Pale+Gray" },
-        { name: "Slate",    hex: "#8E97A6", sku: "V06-SLT-1830-1", image: "https://placehold.co/900x620/8E97A6/ffffff?text=Slate" },
-        { name: "Graphite", hex: "#5B5B5B", sku: "V07-GRP-1830-1", image: "https://placehold.co/900x620/5B5B5B/ffffff?text=Graphite" }
+        { name: "Charcoal", hex: "#6E6A66", sku: "V01-FGY-1830-1", image: "https://placehold.co/900x560/6E6A66/ffffff?text=Charcoal" },
+        { name: "Cream",    hex: "#D8D2C2", sku: "V02-CRM-1830-1", image: "https://placehold.co/900x560/D8D2C2/333333?text=Cream" },
+        { name: "Tan",      hex: "#C9A57C", sku: "V03-TAN-1830-1", image: "https://placehold.co/900x560/C9A57C/ffffff?text=Tan" }
+      ]
+    },
+    {
+      name: "Floating Vanity",
+      collection: "Lavanti Mira",
+      price: "$310",
+      dimensions: "W 36\" \u00b7 D 20\" \u00b7 H 22\"",
+      thumbnails: [
+        "https://placehold.co/200x200/e8e4dc/999?text=Handle",
+        "https://placehold.co/200x200/e8e4dc/999?text=Top",
+        "https://placehold.co/200x200/e8e4dc/999?text=Mount"
+      ],
+      colors: [
+        { name: "Walnut", hex: "#6B4A34", sku: "M01-WAL-3620-1", image: "https://placehold.co/900x560/6B4A34/ffffff?text=Walnut" },
+        { name: "White",  hex: "#EDEDE9", sku: "M02-WHT-3620-1", image: "https://placehold.co/900x560/EDEDE9/333333?text=White" }
       ]
     }
   ];
 
-  const product = PRODUCTS[0];
+  /* ============================================================
+     Below this line: page-building logic. You don't need to edit
+     this unless you want to change how things work.
+     ============================================================ */
 
-  document.getElementById("collection-label").textContent = product.collection;
-  document.getElementById("product-name").textContent = product.name;
-  document.getElementById("price-tag").textContent = product.price;
-  document.getElementById("dimensions").textContent = product.dimensions;
-  document.getElementById("collection-name").textContent = product.collection;
+  document.getElementById("cover-logo").textContent = COVER.logo;
+  document.getElementById("cover-title").textContent = COVER.title;
+  document.getElementById("cover-subtitle").textContent = COVER.subtitle;
+  document.getElementById("cover-image").src = COVER.image;
 
-  const heroImage = document.getElementById("hero-image");
-  const skuLabel = document.getElementById("sku-code");
-  const swatchRow = document.getElementById("swatch-row");
-  const thumbRow = document.getElementById("thumb-row");
+  const productPagesContainer = document.getElementById("product-pages");
+  const totalPages = PRODUCTS.length + 1; // +1 for cover
 
-  product.thumbnails.forEach(src => {
-    const t = document.createElement("img");
-    t.className = "thumb";
-    t.src = src;
-    thumbRow.appendChild(t);
+  PRODUCTS.forEach((product, productIndex) => {
+    const pageNumber = productIndex + 1;
+
+    const page = document.createElement("div");
+    page.className = "page";
+    page.dataset.page = pageNumber;
+
+    page.innerHTML = `
+      <div class="collection-label">${product.collection}</div>
+      <div class="product-name">${product.name}</div>
+      <div class="colors-heading">Available colors</div>
+      <div class="swatch-row"></div>
+      <div class="sku-code"></div>
+      <img class="hero-image" src="" alt="">
+      <div class="thumb-row"></div>
+      <div class="info-row">
+        <div class="price-tag">${product.price}</div>
+        <div class="details">
+          <h3>Dimensions</h3>
+          <p>${product.dimensions}</p>
+          <h3 style="margin-top:16px;">Collection</h3>
+          <p>${product.collection}</p>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">Prev</button>
+        <div class="page-dots"></div>
+        <button class="nav-btn" ${pageNumber === totalPages - 1 ? "disabled" : `onclick="goToPage(${pageNumber + 1})"`}>Next</button>
+      </div>
+    `;
+
+    productPagesContainer.appendChild(page);
+
+    const heroImage = page.querySelector(".hero-image");
+    const skuLabel = page.querySelector(".sku-code");
+    const swatchRow = page.querySelector(".swatch-row");
+    const thumbRow = page.querySelector(".thumb-row");
+
+    product.thumbnails.forEach(src => {
+      const t = document.createElement("img");
+      t.className = "thumb";
+      t.src = src;
+      thumbRow.appendChild(t);
+    });
+
+    function selectColor(color, btn) {
+      heroImage.src = color.image;
+      heroImage.alt = product.name + " - " + color.name;
+      skuLabel.textContent = color.sku;
+      swatchRow.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
+      btn.classList.add("selected");
+    }
+
+    product.colors.forEach((color, index) => {
+      const btn = document.createElement("button");
+      btn.className = "swatch" + (index === 0 ? " selected" : "");
+      btn.style.background = color.hex;
+      btn.setAttribute("aria-label", color.name);
+      btn.onclick = () => selectColor(color, btn);
+      swatchRow.appendChild(btn);
+    });
+
+    selectColor(product.colors[0], swatchRow.children[0]);
   });
 
-  function selectColor(color, btn) {
-    heroImage.src = color.image;
-    heroImage.alt = product.name + " - " + color.name;
-    skuLabel.textContent = color.sku;
-    swatchRow.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
-    btn.classList.add("selected");
+  // Build page dots on every page
+  document.querySelectorAll(".page-dots").forEach(dotsContainer => {
+    for (let i = 0; i < totalPages; i++) {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      dotsContainer.appendChild(dot);
+    }
+  });
+
+  function updateDots(activePage) {
+    document.querySelectorAll(".page-dots").forEach(dotsContainer => {
+      dotsContainer.querySelectorAll(".dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === activePage);
+      });
+    });
   }
 
-  product.colors.forEach((color, index) => {
-    const btn = document.createElement("button");
-    btn.className = "swatch" + (index === 0 ? " selected" : "");
-    btn.style.background = color.hex;
-    btn.setAttribute("aria-label", color.name);
-    btn.onclick = () => selectColor(color, btn);
-    swatchRow.appendChild(btn);
-  });
+  function goToPage(pageNumber) {
+    document.querySelectorAll(".cover-page, .page").forEach(p => {
+      p.classList.toggle("active", Number(p.dataset.page) === pageNumber);
+    });
+    updateDots(pageNumber);
+    window.scrollTo(0, 0);
+  }
 
-  selectColor(product.colors[0], swatchRow.children[0]);
+  updateDots(0);
 </script>
 
 </body>
