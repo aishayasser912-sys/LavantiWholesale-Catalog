@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Color Catalog</title>
+<style>
+  /* ============================================================
+     HOW TO EDIT THIS FILE (read this first!)
+     ============================================================
+     1. Find the "PRODUCTS" list in the <script> section near the
+        bottom of this file.
+     2. For each product, replace the placeholder image URLs with
+        your own image file names (e.g. "shirt-red.jpg").
+     3. Upload your image files to the SAME GitHub folder as this
+        index.html file.
+     4. Change the "name" and "hex" (color) for each swatch to
+        match your real product colors.
+     5. Save, upload everything to GitHub, and it just works.
+     ============================================================ */
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f2;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* This is your fixed 1080 x 1920 canvas */
+  #canvas {
+    width: 1080px;
+    height: 1920px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    padding: 60px 0 20px;
+    color: #222;
+  }
+
+  .product-card {
+    width: 900px;
+    margin: 30px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .product-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #eee;
+  }
+
+  .product-name {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #222;
+  }
+
+  .product-color-label {
+    font-size: 20px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  .swatch-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .swatch {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    padding: 0;
+  }
+
+  .swatch.selected {
+    border-color: #222;
+  }
+</style>
+</head>
+<body>
+
+<div id="canvas">
+  <div class="page-title">Our Catalog</div>
+  <div id="product-list"></div>
+</div>
+
+<script>
+  /* ============================================================
+     PRODUCTS
+     ============================================================
+     Add one entry per product. Inside "colors", add one entry
+     per color variant: give it a name, a hex color for the swatch
+     circle, and the image file to show when that swatch is clicked.
+
+     Replace the placeholder "https://placehold.co/..." URLs with
+     your own image file names once you upload them to GitHub,
+     e.g. "shirt-red.jpg"
+     ============================================================ */
+
+  const PRODUCTS = [
+    {
+      name: "Classic T-Shirt",
+      colors: [
+        { name: "Red",   hex: "#D85A30", image: "https://placehold.co/500x500/D85A30/ffffff?text=Red" },
+        { name: "Blue",  hex: "#378ADD", image: "https://placehold.co/500x500/378ADD/ffffff?text=Blue" },
+        { name: "Green", hex: "#639922", image: "https://placehold.co/500x500/639922/ffffff?text=Green" }
+      ]
+    },
+    {
+      name: "Everyday Tote Bag",
+      colors: [
+        { name: "Black", hex: "#2C2C2A", image: "https://placehold.co/500x500/2C2C2A/ffffff?text=Black" },
+        { name: "Beige", hex: "#D3D1C7", image: "https://placehold.co/500x500/D3D1C7/222222?text=Beige" }
+      ]
+    }
+  ];
+
+  const listContainer = document.getElementById("product-list");
+
+  PRODUCTS.forEach((product, productIndex) => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    const img = document.createElement("img");
+    img.className = "product-image";
+    img.src = product.colors[0].image;
+    img.alt = product.name;
+
+    const name = document.createElement("div");
+    name.className = "product-name";
+    name.textContent = product.name;
+
+    const colorLabel = document.createElement("div");
+    colorLabel.className = "product-color-label";
+    colorLabel.textContent = product.colors[0].name;
+
+    const swatchRow = document.createElement("div");
+    swatchRow.className = "swatch-row";
+
+    product.colors.forEach((color, colorIndex) => {
+      const btn = document.createElement("button");
+      btn.className = "swatch" + (colorIndex === 0 ? " selected" : "");
+      btn.style.background = color.hex;
+      btn.setAttribute("aria-label", color.name);
+
+      btn.onclick = () => {
+        img.src = color.image;
+        colorLabel.textContent = color.name;
+        swatchRow.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
+        btn.classList.add("selected");
+      };
+
+      swatchRow.appendChild(btn);
+    });
+
+    card.appendChild(img);
+    card.appendChild(name);
+    card.appendChild(colorLabel);
+    card.appendChild(swatchRow);
+    listContainer.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
