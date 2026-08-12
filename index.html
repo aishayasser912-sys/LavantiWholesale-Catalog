@@ -243,12 +243,45 @@
     background: #222;
     color: #ffffff;
     border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 15px;
+    padding: 16px 30px;
+    border-radius: 8px;
+    font-size: 19px;
     font-weight: bold;
     cursor: pointer;
   }
+
+  .page-counter {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .cover-instructions {
+    font-size: 15px;
+    color: #888;
+    margin-top: 24px;
+    margin-bottom: 6px;
+  }
+
+  .jump-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .jump-btn {
+    background: #f7f4ee;
+    color: #333;
+    border: 2px solid #ddd;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .jump-btn:active { background: #eee; }
 
   .page-counter {
     font-size: 14px;
@@ -271,10 +304,12 @@
     <div class="cover-title" id="cover-title"></div>
     <div class="cover-subtitle" id="cover-subtitle"></div>
     <img class="cover-image" id="cover-image" src="" alt="">
+    <div class="cover-instructions">Tap a collection below to jump straight to it</div>
+    <div class="jump-menu" id="jump-menu"></div>
     <div class="nav-bar">
       <div></div>
       <div class="page-counter" id="cover-counter"></div>
-      <button class="nav-btn" onclick="goToPage(1)">Next</button>
+      <button class="nav-btn" onclick="goToPage(1)">Next \u203a</button>
     </div>
   </div>
 
@@ -572,10 +607,25 @@
 
   // Flatten collections -> sizes into one linear page list
   const FLAT_PAGES = [];
+  const COLLECTION_START_PAGE = {}; // collection name -> its first page number
+
   COLLECTIONS.forEach(collection => {
-    collection.sizes.forEach(size => {
+    collection.sizes.forEach((size, sIndex) => {
       FLAT_PAGES.push({ collectionName: collection.name, size });
+      if (sIndex === 0) {
+        COLLECTION_START_PAGE[collection.name] = FLAT_PAGES.length; // page number, 1-based (cover is 0)
+      }
     });
+  });
+
+  // Build the "jump straight to a collection" buttons on the cover
+  const jumpMenu = document.getElementById("jump-menu");
+  COLLECTIONS.forEach(collection => {
+    const btn = document.createElement("button");
+    btn.className = "jump-btn";
+    btn.textContent = collection.name;
+    btn.onclick = () => goToPage(COLLECTION_START_PAGE[collection.name]);
+    jumpMenu.appendChild(btn);
   });
 
   const totalPages = FLAT_PAGES.length + 1; // +1 for cover
@@ -617,9 +667,9 @@
         </div>
       </div>
       <div class="nav-bar">
-        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">Prev</button>
+        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">\u2039 Prev</button>
         <div class="page-counter">Page ${pageNumber + 1} of ${totalPages}</div>
-        <button class="nav-btn" onclick="goToPage(${pageNumber + 1})">Next</button>
+        <button class="nav-btn" onclick="goToPage(${pageNumber + 1})">Next \u203a</button>
       </div>
     `;
 
