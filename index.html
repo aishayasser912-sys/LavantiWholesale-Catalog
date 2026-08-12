@@ -139,16 +139,34 @@
     margin-bottom: 8px;
   }
 
-  .swatch {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-    padding: 0;
+  .swatch-hint {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 14px;
+    font-style: italic;
   }
 
-  .swatch.selected { border-color: #222; }
+  .swatch {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid #ddd;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .swatch:hover {
+    transform: scale(1.12);
+  }
+
+  .swatch.selected {
+    border-color: #222;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px #222, 0 2px 6px rgba(0,0,0,0.2);
+    transform: scale(1.08);
+  }
 
   .sku-code {
     text-align: center;
@@ -168,11 +186,12 @@
   .hero-image {
     display: block;
     width: 100%;
-    height: 560px;
-    object-fit: cover;
+    height: 1120px;
+    object-fit: contain;
     border-radius: 8px;
-    background: #eee;
-    margin-bottom: 20px;
+    background: #f7f7f5;
+    border: 1px solid #eee;
+    margin-bottom: 16px;
   }
 
   .info-row {
@@ -197,8 +216,11 @@
   .details h3 {
     font-size: 16px;
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    margin-top: 14px;
   }
+
+  .details h3:first-child { margin-top: 0; }
 
   .details p {
     font-size: 15px;
@@ -214,25 +236,17 @@
     right: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
-
-  .nav-btn {
-    background: #222;
-    color: #ffffff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .nav-btn:disabled { background: #ccc; cursor: default; }
 
   .page-counter {
     font-size: 14px;
     color: #888;
+  }
+
+  .swipe-hint {
+    font-size: 13px;
+    color: #aaa;
   }
 </style>
 </head>
@@ -247,10 +261,9 @@
     <div class="cover-subtitle" id="cover-subtitle"></div>
     <img class="cover-image" id="cover-image" src="" alt="">
     <div class="nav-bar">
-      <div></div>
       <div class="page-counter" id="cover-counter"></div>
-      <button class="nav-btn" onclick="goToPage(1)">Next</button>
     </div>
+    <div class="swipe-hint" style="position:absolute; bottom:8px; left:0; right:0; text-align:center;">Swipe left to browse &rarr;</div>
   </div>
 
   <!-- All other pages get inserted here by JS -->
@@ -280,19 +293,19 @@
       name: "Golden",
       sizes: [
         { label: "30\" Vanity", colors: [
-          { name: "Grey",      sku: "G-30-GY", price: 499, image: "G-30-GY.png" },
-          { name: "Navy Blue", sku: "G-30-NB", price: 499, image: "G-30-NB.png" },
-          { name: "White",     sku: "G-30-WH", price: 499, image: "G-30-WH.png" }
+          { name: "Grey",      sku: "G-30-GY", price: 499, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-30-NB", price: 499, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-30-WH", price: 499, image: "placeholder.jpg" }
         ]},
         { label: "60\" Vanity", colors: [
-          { name: "Grey",      sku: "G-60-GY", price: 1299, image: "G-60-GY.png" },
-          { name: "Navy Blue", sku: "G-60-NB", price: 1299, image: "G-60-NB.png" },
-          { name: "White",     sku: "G-60-WH", price: 1299, image: "G-60-WH.png" }
+          { name: "Grey",      sku: "G-60-GY", price: 1299, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-60-NB", price: 1299, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-60-WH", price: 1299, image: "placeholder.jpg" }
         ]},
         { label: "72\" Vanity", colors: [
-          { name: "Grey",      sku: "G-72-GY", price: 1499, image: "G-72-GY.png" },
-          { name: "Navy Blue", sku: "G-72-NB", price: 1499, image: "G-72-NB.png" },
-          { name: "White",     sku: "G-72-WH", price: 1499, image: "G-72-WH.png" }
+          { name: "Grey",      sku: "G-72-GY", price: 1499, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-72-NB", price: 1499, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-72-WH", price: 1499, image: "placeholder.jpg" }
         ]}
       ]
     },
@@ -301,26 +314,26 @@
       name: "Oakford",
       sizes: [
         { label: "24\" Vanity", colors: [
-          { name: "Black", sku: "V04-BK-24", price: 539, image: "V04-BK-24.JPG" },
-          { name: "Grey",  sku: "V04-GY-24", price: 539, image: "V04-GY-24.jpg" },
-          { name: "Navy Blue", sku: "V04-NB-24", price: 539, image: "V04-NB-1824.jpg" },
-          { name: "Oak",   sku: "V04-OK-24", price: 539, image: "V04-OK-2224.jpg" },
-          { name: "White", sku: "V04-WH-24", price: 539, image: "V04-WH-1824.jpg" }
+          { name: "Black", sku: "V04-BK-24", price: 539, image: "placeholder.jpg" },
+          { name: "Grey",  sku: "V04-GY-24", price: 539, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "V04-NB-24", price: 539, image: "placeholder.jpg" },
+          { name: "Oak",   sku: "V04-OK-24", price: 539, image: "placeholder.jpg" },
+          { name: "White", sku: "V04-WH-24", price: 539, image: "placeholder.jpg" }
         ]},
         { label: "24x18\" Vanity (18\" depth)", colors: [
-          { name: "Black", sku: "V04-BK-24x18", price: 539, image: "V04-BK-24.JPG" },
-          { name: "Grey",  sku: "V04-GY-24x18", price: 539, image: "V04-GY-24.jpg" },
-          { name: "Navy Blue", sku: "V04-NB-24x18", price: 539, image: "V04-NB-1824.jpg" },
-          { name: "Oak",   sku: "V04-OK-24x18", price: 539, image: "V04-OK-2224.jpg" },
-          { name: "White", sku: "V04-WH-24x18", price: 539, image: "V04-WH-1824.jpg" },
+          { name: "Black", sku: "V04-BK-24x18", price: 539, image: "placeholder.jpg" },
+          { name: "Grey",  sku: "V04-GY-24x18", price: 539, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "V04-NB-24x18", price: 539, image: "placeholder.jpg" },
+          { name: "Oak",   sku: "V04-OK-24x18", price: 539, image: "placeholder.jpg" },
+          { name: "White", sku: "V04-WH-24x18", price: 539, image: "placeholder.jpg" },
           { name: "Rosewood Grey", sku: "V04-RSGY-24X18", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "30\" Vanity", colors: [
-          { name: "Black", sku: "V04-BK-30", price: 629, image: "V04-BK-30.jpg" },
-          { name: "Grey",  sku: "V04-GY-30", price: 629, image: "V04-GY.jpg" },
+          { name: "Black", sku: "V04-BK-30", price: 629, image: "V04-BK-30_2.jpg" },
+          { name: "Grey",  sku: "V04-GY-30", price: 629, image: "placeholder.jpg" },
           { name: "Navy Blue", sku: "V04-NB-30", price: 629, image: "placeholder.jpg" },
-          { name: "Oak",   sku: "V04-OK-30", price: 629, image: "V04-OK-30.jpg" },
-          { name: "White", sku: "V04-WH-30", price: 629, image: "V04-WH-1830.jpg" },
+          { name: "Oak",   sku: "V04-OK-30", price: 629, image: "placeholder.jpg" },
+          { name: "White", sku: "V04-WH-30", price: 629, image: "placeholder.jpg" },
           { name: "Walnut", sku: "V04-WT-30", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "30x18\" Vanity (18\" depth)", colors: [
@@ -560,6 +573,14 @@
     const pageNumber = index + 1;
     const { collectionName, size } = entry;
 
+    // Pull width from the start of the label, depth is 18" if the
+    // label mentions "18\" depth" or "x18", otherwise standard 22".
+    const widthMatch = size.label.match(/\d+/);
+    const dims = {
+      width: widthMatch ? widthMatch[0] : "?",
+      depth: /18/.test(size.label) ? 18 : 22
+    };
+
     const page = document.createElement("div");
     page.className = "page";
     page.dataset.page = pageNumber;
@@ -569,6 +590,7 @@
       <div class="product-name">Bathroom Vanity</div>
       <div class="size-label">${size.label}</div>
       <div class="colors-heading">Available colors</div>
+      <div class="swatch-hint">Tap a color to preview it</div>
       <div class="swatch-row"></div>
       <div class="sku-code"></div>
       <div class="color-name"></div>
@@ -576,14 +598,14 @@
       <div class="info-row">
         <div class="price-tag"></div>
         <div class="details">
+          <h3>Dimensions</h3>
+          <p>${dims.width}"W \u00d7 ${dims.depth}"D \u00d7 35"H</p>
           <h3>Collection</h3>
           <p>${collectionName}</p>
         </div>
       </div>
       <div class="nav-bar">
-        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">Prev</button>
         <div class="page-counter">Page ${pageNumber + 1} of ${totalPages}</div>
-        <button class="nav-btn" ${pageNumber === totalPages - 1 ? "disabled" : `onclick="goToPage(${pageNumber + 1})"`}>Next</button>
       </div>
     `;
 
@@ -626,12 +648,48 @@
     selectColor(size.colors[0], swatchRow.children[0]);
   });
 
+  let currentPage = 0;
+
   function goToPage(pageNumber) {
+    if (pageNumber < 0 || pageNumber > totalPages - 1) return;
+    currentPage = pageNumber;
     document.querySelectorAll(".cover-page, .page").forEach(p => {
       p.classList.toggle("active", Number(p.dataset.page) === pageNumber);
     });
     window.scrollTo(0, 0);
   }
+
+  // ---- Swipe to flip pages ----
+  const canvasEl = document.getElementById("canvas");
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  canvasEl.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  canvasEl.addEventListener("touchend", e => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const touchEndY = e.changedTouches[0].screenY;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Ignore mostly-vertical swipes (user is scrolling, not flipping)
+    if (Math.abs(deltaX) < 60 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+    if (deltaX < 0) {
+      goToPage(currentPage + 1); // swiped left -> next page
+    } else {
+      goToPage(currentPage - 1); // swiped right -> previous page
+    }
+  }, { passive: true });
+
+  // Also allow arrow keys for anyone viewing on desktop
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") goToPage(currentPage + 1);
+    if (e.key === "ArrowLeft") goToPage(currentPage - 1);
+  });
 </script>
 
 </body>
