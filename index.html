@@ -125,10 +125,28 @@
 
   .colors-heading {
     text-align: center;
-    font-size: 18px;
+    font-size: 23px;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 16px;
+    color: #222;
+    margin-bottom: 6px;
+  }
+
+  .home-bar {
+    position: absolute;
+    bottom: 78px;
+    left: 50px;
+    right: 50px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
   }
 
   .swatch-row {
@@ -141,10 +159,11 @@
 
   .swatch-hint {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     color: #999;
-    margin-bottom: 14px;
-    font-style: italic;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .swatch {
@@ -309,7 +328,7 @@
     <div class="nav-bar">
       <div></div>
       <div class="page-counter" id="cover-counter"></div>
-      <button class="nav-btn" onclick="goToPage(1)">Next \u203a</button>
+      <button class="nav-btn" onclick="goToPage(1)">Next ›</button>
     </div>
   </div>
 
@@ -340,19 +359,19 @@
       name: "Golden",
       sizes: [
         { label: "30\" Vanity", colors: [
-          { name: "Grey",      sku: "G-30-GY", price: 499, image: "G-30-GY.png" },
-          { name: "Navy Blue", sku: "G-30-NB", price: 499, image: "G-30-NB.png" },
-          { name: "White",     sku: "G-30-WH", price: 499, image: "G-30-WH.png" }
+          { name: "Grey",      sku: "G-30-GY", price: 499, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-30-NB", price: 499, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-30-WH", price: 499, image: "placeholder.jpg" }
         ]},
         { label: "60\" Vanity", colors: [
-          { name: "Grey",      sku: "G-60-GY", price: 1299, image: "G-60-GY.png" },
-          { name: "Navy Blue", sku: "G-60-NB", price: 1299, image: "G-60-NB.png" },
-          { name: "White",     sku: "G-60-WH", price: 1299, image: "G-60-WH.png" }
+          { name: "Grey",      sku: "G-60-GY", price: 1299, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-60-NB", price: 1299, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-60-WH", price: 1299, image: "placeholder.jpg" }
         ]},
         { label: "72\" Vanity", colors: [
-          { name: "Grey",      sku: "G-72-GY", price: 1499, image: "G-72-GY.png" },
-          { name: "Navy Blue", sku: "G-72-NB", price: 1499, image: "G-72-NB.png" },
-          { name: "White",     sku: "G-72-WH", price: 1499, image: "G-72-WH.png" }
+          { name: "Grey",      sku: "G-72-GY", price: 1499, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "G-72-NB", price: 1499, image: "placeholder.jpg" },
+          { name: "White",     sku: "G-72-WH", price: 1499, image: "placeholder.jpg" }
         ]}
       ]
     },
@@ -388,20 +407,20 @@
           { name: "White", sku: "V04-WH-30X18", price: 629, image: "placeholder.jpg" }
         ]},
         { label: "36\" Vanity - Centered Door", colors: [
-          { name: "Black", sku: "V04-BK-36C", price: 719, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-36C", price: 000, image: "placeholder.jpg" },
           { name: "Grey",  sku: "V04-GY-36C", price: 719, image: "placeholder.jpg" },
           { name: "Oak",   sku: "V04-OK-36C", price: 719, image: "V04-OK-36C_1.jpg" },
           { name: "White", sku: "V04-WH-36C", price: 719, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-36C", price: 719, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-36C", price: 719, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-36C", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-36C", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "36\" Vanity - Left Door", colors: [
-          { name: "Black", sku: "V04-BK-36L", price: 675, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-36L", price: 000, image: "placeholder.jpg" },
           { name: "Grey",  sku: "V04-GY-36L", price: 675, image: "placeholder.jpg" },
           { name: "Oak",   sku: "V04-OK-36L", price: 675, image: "V04-OK-36L_1.jpg" },
           { name: "White", sku: "V04-WH-36L", price: 675, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-36L", price: 675, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-36L", price: 675, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-36L", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-36L", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "36\" Vanity - Right Door", colors: [
           { name: "Grey",  sku: "V04-GY-36R", price: 000, image: "placeholder.jpg" },
@@ -423,11 +442,11 @@
         { label: "42\" Vanity", colors: [
           { name: "Grey", sku: "V04-GY-42", price: 855, image: "placeholder.jpg" },
           { name: "Navy Blue", sku: "V04-NB-42", price: 855, image: "placeholder.jpg" },
-          { name: "Black", sku: "V04-BK-42", price: 855, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-42", price: 000, image: "placeholder.jpg" },
           { name: "Oak", sku: "V04-OK-42", price: 855, image: "placeholder.jpg" },
           { name: "White", sku: "V04-WH-42", price: 855, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-42", price: 855, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-42", price: 855, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-42", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-42", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "42x18\" Vanity (18\" depth)", colors: [
           { name: "White", sku: "V04-WH-42x18", price: 855, image: "placeholder.jpg" }
@@ -435,11 +454,11 @@
         { label: "48\" Vanity", colors: [
           { name: "Grey", sku: "V04-GY-48", price: 899, image: "placeholder.jpg" },
           { name: "Navy Blue", sku: "V04-NB-48", price: 899, image: "placeholder.jpg" },
-          { name: "Black", sku: "V04-BK-48", price: 899, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-48", price: 000, image: "placeholder.jpg" },
           { name: "Oak", sku: "V04-OK-48", price: 899, image: "placeholder.jpg" },
           { name: "White", sku: "V04-WH-48", price: 899, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-48", price: 899, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-48", price: 899, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-48", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-48", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "48\" Vanity - Double Sink", colors: [
           { name: "Grey", sku: "V04-GY-48DS", price: 899, image: "placeholder.jpg" },
@@ -452,21 +471,21 @@
         ]},
         { label: "54\" Vanity", colors: [
           { name: "Grey", sku: "V04-GY-54", price: 1079, image: "placeholder.jpg" },
-          { name: "Navy Blue", sku: "V04-NB-54", price: 1079, image: "placeholder.jpg" },
-          { name: "Black", sku: "V04-BK-54", price: 1079, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "V04-NB-54", price: 000, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-54", price: 000, image: "placeholder.jpg" },
           { name: "Oak", sku: "V04-OK-54", price: 1079, image: "placeholder.jpg" },
           { name: "White", sku: "V04-WH-54", price: 1079, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-54", price: 1079, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-54", price: 1079, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-54", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-54", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "60\" Vanity", colors: [
           { name: "Grey", sku: "V04-GY-60", price: 1259, image: "placeholder.jpg" },
-          { name: "Navy Blue", sku: "V04-NB-60", price: 1259, image: "placeholder.jpg" },
-          { name: "Black", sku: "V04-BK-60", price: 1259, image: "placeholder.jpg" },
+          { name: "Navy Blue", sku: "V04-NB-60", price: 000, image: "placeholder.jpg" },
+          { name: "Black", sku: "V04-BK-60", price: 000, image: "placeholder.jpg" },
           { name: "Oak", sku: "V04-OK-60", price: 1259, image: "placeholder.jpg" },
           { name: "White", sku: "V04-WH-60", price: 1259, image: "placeholder.jpg" },
-          { name: "Walnut", sku: "V04-WT-60", price: 1259, image: "placeholder.jpg" },
-          { name: "Rosewood Grey", sku: "V04-RSGY-60", price: 1259, image: "placeholder.jpg" }
+          { name: "Walnut", sku: "V04-WT-60", price: 000, image: "placeholder.jpg" },
+          { name: "Rosewood Grey", sku: "V04-RSGY-60", price: 000, image: "placeholder.jpg" }
         ]},
         { label: "60\" Vanity - Single Sink (wide top)", colors: [
           { name: "Grey", sku: "V04-GY-60SS", price: 1259, image: "placeholder.jpg" },
@@ -544,7 +563,7 @@
           { name: "White",          sku: "V05-WH-48",  price: 989, image: "placeholder.jpg" }
         ]},
         { label: "60\" Vanity", colors: [
-          { name: "Firewood Black", sku: "V05-FBK-60", price: 1439, image: "placeholder.jpg" },
+          { name: "Firewood Black", sku: "V05-FBK-60", price: 000, image: "placeholder.jpg" },
           { name: "Firewood Oak",   sku: "V05-FOK-60", price: 1439, image: "placeholder.jpg" },
           { name: "White",          sku: "V05-WH-60",  price: 1439, image: "placeholder.jpg" }
         ]},
@@ -651,8 +670,8 @@
       <div class="collection-label">${collectionName}</div>
       <div class="product-name">Bathroom Vanity</div>
       <div class="size-label">${size.label}</div>
-      <div class="colors-heading">Available colors</div>
-      <div class="swatch-hint">Tap a color to preview it</div>
+      <div class="colors-heading">Tap a color to preview it</div>
+      <div class="swatch-hint">Available colors</div>
       <div class="swatch-row"></div>
       <div class="sku-code"></div>
       <div class="color-name"></div>
@@ -666,10 +685,13 @@
           <p>${collectionName}</p>
         </div>
       </div>
+      <div class="home-bar">
+        <button class="home-btn" onclick="goToPage(0)">⌂ Back to Start</button>
+      </div>
       <div class="nav-bar">
-        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">\u2039 Prev</button>
+        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">‹ Prev</button>
         <div class="page-counter">Page ${pageNumber + 1} of ${totalPages}</div>
-        <button class="nav-btn" onclick="goToPage(${pageNumber + 1})">Next \u203a</button>
+        <button class="nav-btn" onclick="goToPage(${pageNumber + 1})">Next ›</button>
       </div>
     `;
 
