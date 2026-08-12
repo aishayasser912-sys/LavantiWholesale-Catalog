@@ -236,7 +236,18 @@
     right: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+  }
+
+  .nav-btn {
+    background: #222;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
   }
 
   .page-counter {
@@ -261,9 +272,10 @@
     <div class="cover-subtitle" id="cover-subtitle"></div>
     <img class="cover-image" id="cover-image" src="" alt="">
     <div class="nav-bar">
+      <div></div>
       <div class="page-counter" id="cover-counter"></div>
+      <button class="nav-btn" onclick="goToPage(1)">Next</button>
     </div>
-    <div class="swipe-hint" style="position:absolute; bottom:8px; left:0; right:0; text-align:center;">Swipe left to browse &rarr;</div>
   </div>
 
   <!-- All other pages get inserted here by JS -->
@@ -605,7 +617,9 @@
         </div>
       </div>
       <div class="nav-bar">
+        <button class="nav-btn" onclick="goToPage(${pageNumber - 1})">Prev</button>
         <div class="page-counter">Page ${pageNumber + 1} of ${totalPages}</div>
+        <button class="nav-btn" onclick="goToPage(${pageNumber + 1})">Next</button>
       </div>
     `;
 
